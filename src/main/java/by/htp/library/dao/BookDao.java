@@ -2,16 +2,17 @@ package by.htp.library.dao;
 
 import java.util.List;
 
-import by.htp.library.book.Book;
+import by.htp.library.entity.Book;
 
 public interface BookDao {
-	Book read(int id);
+	
+	Book getBookById(int idBook);
 
 	List<Book> list();
 
-	void add(Book book);
+	void addBook(Book book);
 
-	void delete(Book book);
+	void deleteBookById(int idBook);
 
-	void update(Book book);
+	void updateBookOwner(int idBook, int idReader);
 }

@@ -1,4 +1,4 @@
-package by.htp.library.book;
+package by.htp.library.entity;
 
 public class Book {
 	private String title;
@@ -58,6 +58,8 @@ public class Book {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((autor == null) ? 0 : autor.hashCode());
+		result = prime * result + idAutor;
+		result = prime * result + idBook;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -76,6 +78,10 @@ public class Book {
 				return false;
 		} else if (!autor.equals(other.autor))
 			return false;
+		if (idAutor != other.idAutor)
+			return false;
+		if (idBook != other.idBook)
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -83,4 +89,8 @@ public class Book {
 			return false;
 		return true;
 	}
+
+
+
+	
 }

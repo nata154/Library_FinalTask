@@ -1,4 +1,4 @@
-package by.htp.library.reader;
+package by.htp.library.entity;
 
 public class Reader {
 	

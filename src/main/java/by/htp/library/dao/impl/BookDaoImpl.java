@@ -11,8 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.htp.library.book.Book;
 import by.htp.library.dao.BookDao;
+import by.htp.library.entity.Book;
+
 
 public class BookDaoImpl implements BookDao {
 
@@ -24,7 +25,7 @@ public class BookDaoImpl implements BookDao {
 	private static final String UPDATE_BOOK = "UPDATE book SET title = ?, author = ? WHERE id_book = ?";
 
 	@Override
-	public Book read(int id) {
+	public Book getBookById(int id) {
 
 		Book book = null;
 
@@ -55,7 +56,7 @@ public class BookDaoImpl implements BookDao {
 				
 				String Autor=result.getString("autor");
 				int idAutor= result.getInt("id_autor");
-
+				
 				Book b = new Book();
 				b.setIdAutor(idAutor);
 				b.setAutor(Autor);
@@ -71,29 +72,32 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public void add(Book book) {
+	public void addBook(Book book) {
 		String title = book.getTitle();
+		String Autor = book.getAutor();
 		int idAutor = book.getIdAutor();
+		int idBook = book.getIdBook();
 
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(INSERT_BOOK);
 			ps.setString(1, title);
-			ps.setInt(2, idAutor);
+			ps.setString(2, Autor);
+			ps.setInt(3, idAutor);
+			ps.setInt(4, idBook);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
-	public void delete(Book book) {
-		String title = book.getTitle();
-		int idAutor = book.getIdAutor();
+	@Override  
+    public void deleteBookById(int id) { //что-то не то
+		    Book book = new Book();
+	        id=book.getIdBook();
 
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(DELETE_BOOK);
-			ps.setString(1, title);
-			ps.setInt(2, idAutor);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,7 +105,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public void update(Book book) {
+	public void updateBookOwner(int idB, int idR){
 		int idBook = book.getIdBook();
 		String title = book.getTitle();
 		int idAutor = book.getIdAutor();
@@ -120,8 +124,6 @@ public class BookDaoImpl implements BookDao {
 	private Book buildBook(ResultSet rs) throws SQLException {
 		Book book = new Book();
 		book.setTitle(rs.getString("title"));
-		return book;
+		return book;
 	}
-
 }
-

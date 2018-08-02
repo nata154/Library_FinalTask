@@ -1,4 +1,4 @@
-package by.htp.library.librarian;
+package by.htp.library.entity;
 
 public class Librarian {
 

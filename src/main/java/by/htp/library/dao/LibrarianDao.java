@@ -2,9 +2,10 @@ package by.htp.library.dao;
 
 import java.util.List;
 
-import by.htp.library.librarian.Librarian;
+import by.htp.library.entity.Librarian;
 
 public interface LibrarianDao {
+	
 	Librarian read(int idLibrarian);
 
 	List<Librarian> list();
