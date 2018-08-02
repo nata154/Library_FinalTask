@@ -13,7 +13,7 @@ import java.util.List;
 
 import by.htp.library.dao.BookDao;
 import by.htp.library.entity.Book;
-
+import by.htp.library.entity.Reader;
 
 public class BookDaoImpl implements BookDao {
 
@@ -39,6 +39,30 @@ public class BookDaoImpl implements BookDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return book;
+	}
+	
+	@Override
+	public Book readBook(int id) {
+
+		Book book = null;
+
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(SELECT_BOOK_BYID);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				book = buildBook(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return book;
+	}
+
+	private Book buildBook(ResultSet rs) throws SQLException {
+		Book book = new Book();
+		book.setTitle(rs.getString("title"));
 		return book;
 	}
 
@@ -72,9 +96,9 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public void addBook(Book book) {
-		String title = book.getTitle();
-		String Autor = book.getAutor();
+	public void addNewBook(Book book) {
+		String title = book.setTitle("Maygli");
+		String Autor = book.setAutor("R. Kipling");
 		int idAutor = book.getIdAutor();
 		int idBook = book.getIdBook();
 
@@ -105,25 +129,29 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public void updateBookOwner(int idB, int idR){
+	public void updateBookOwner(Book book, Reader reader){
 		int idBook = book.getIdBook();
 		String title = book.getTitle();
 		int idAutor = book.getIdAutor();
+		int idReader = reader.setIdReader(222);//Here might be Math.random
 
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE_BOOK);
 			ps.setString(1, title);
 			ps.setInt(2, idAutor);
 			ps.setInt(3, idBook);
+			ps.setInt(4, idReader);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private Book buildBook(ResultSet rs) throws SQLException {
-		Book book = new Book();
-		book.setTitle(rs.getString("title"));
-		return book;
+	@Override
+	public void addBooktoReader(Book book) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	
 }

@@ -20,16 +20,16 @@ public class Book {
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public String setTitle(String title) {
+		return this.title = title;
 	}
 
 	public String getAutor() {
 		return autor;
 	}
 
-	public void setAutor(String autor) {
-		this.autor = autor;
+	public String setAutor(String autor) {
+		return this.autor = autor;
 	}
 
 	public int getIdAutor() {

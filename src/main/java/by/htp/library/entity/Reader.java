@@ -30,8 +30,8 @@ public class Reader {
 		return idReader;
 	}
 
-	public void setIdReader(int idReader) {
-		this.idReader = idReader;
+	public int setIdReader(int idReader) {
+		return this.idReader = idReader;
 	}
 
 	@Override

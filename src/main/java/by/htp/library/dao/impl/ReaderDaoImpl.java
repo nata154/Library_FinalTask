@@ -26,63 +26,17 @@ public class ReaderDaoImpl implements ReaderDao {
 	private static final String DELETE_BOOK = "DELETE FROM book WHERE title = ? AND author = ?";
 	private static final String UPDATE_BOOK = "UPDATE book SET title = ?, author = ? WHERE id_book = ?";
 
-	@Override
-	public Book read(int id) {
+	
 
-		Book book = null;
-
-		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
-			PreparedStatement ps = conn.prepareStatement(SELECT_BOOK_BYID);
-			ps.setInt(1, id);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				book = buildBook(rs);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return book;
-	}
-
-	private Book buildBook(ResultSet rs) throws SQLException {
-		Book book = new Book();
-		book.setTitle(rs.getString("title"));
-		return book;
-	}
-
-	@Override
-	public List<Book> list() {
-
-		List<Book> listAllBooks = new ArrayList<>();
-
-		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery(SELECT_ALL_BOOK);
-			while (result.next()) {
-				int idBook = result.getInt("id_book");
-				String title = result.getString("title");
-
-				String Autor = result.getString("autor");
-				int idAutor = result.getInt("id_autor");
-
-				Book b = new Book();
-				b.setIdAutor(idAutor);
-				b.setAutor(Autor);
-				b.setIdBook(idBook);
-				b.setTitle(title);
-
-				listAllBooks.add(b);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return listAllBooks;
-	}
 
 	@Override
 	public void autorizeReader(Reader reader) {
-		// TODO Auto-generated method stub
-
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Enter the login");
+		int libraryTicketNumber = scanner.nextInt();
+		System.out.println("Enter the password");
+		String readerPassword = scanner.nextLine();
 	}
 
 	@Override
@@ -115,7 +69,6 @@ public class ReaderDaoImpl implements ReaderDao {
 	}
 
 	public void getBookList() {
-		this.list();
 		List<Book> listAllBooks = new ArrayList<>();
 		for (Book bookToRead : listAllBooks) {
 			System.out.println(bookToRead);
@@ -132,6 +85,12 @@ public class ReaderDaoImpl implements ReaderDao {
 	public void showOverdueBooks(Book book) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Book read(Book book) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

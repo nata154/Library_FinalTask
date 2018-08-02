@@ -8,13 +8,17 @@ public interface LibrarianDao {
 	
 	Librarian read(int idLibrarian);
 
-	List<Librarian> list();
+	List<Book> list();
 
 	void autorizeLibrarian(Librarian librarian);
+	
+	void showMainLibrarianMenu();
+
+	void showOverdueBookReaders(Librarian librarian);
 
 	void addNewBook(Librarian librarian);
-
-	void getLibrarianCounter(Librarian librarian);
 	
 	void setReturnedBook(Librarian librarian);
+	
+	void 
 }
