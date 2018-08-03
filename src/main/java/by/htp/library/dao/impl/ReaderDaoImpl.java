@@ -1,21 +1,12 @@
 package by.htp.library.dao.impl;
 
-import static by.htp.library.dao.util.MySqlPropertyManager.*;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import by.htp.library.dao.BookDao;
+import by.htp.library.dao.impl.BookDaoImpl;
 import by.htp.library.dao.ReaderDao;
 import by.htp.library.entity.Book;
-import by.htp.library.entity.Reader;
 
 public class ReaderDaoImpl implements ReaderDao {
 
@@ -26,13 +17,11 @@ public class ReaderDaoImpl implements ReaderDao {
 	private static final String DELETE_BOOK = "DELETE FROM book WHERE title = ? AND author = ?";
 	private static final String UPDATE_BOOK = "UPDATE book SET title = ?, author = ? WHERE id_book = ?";
 
-	
-
+	Scanner scanner = new Scanner(System.in);
 
 	@Override
-	public void autorizeReader(Reader reader) {
-		Scanner scanner = new Scanner(System.in);
-		
+	public void autorizeReader() {
+
 		System.out.println("Enter the login");
 		int libraryTicketNumber = scanner.nextInt();
 		System.out.println("Enter the password");
@@ -41,8 +30,8 @@ public class ReaderDaoImpl implements ReaderDao {
 
 	@Override
 	public void showMainReaderMenu() {
-
-		Scanner scanner = new Scanner(System.in);
+		
+		BookDaoImpl BDI = new BookDaoImpl();
 
 		System.out.println("Choose menu-item.");
 		System.out.println("1 Get book list");
@@ -56,7 +45,7 @@ public class ReaderDaoImpl implements ReaderDao {
 			getBookList();
 			break;
 		case 2:
-			getBookInformation();
+			BDI.getBookInformation();
 			break;
 		case 3:
 			System.out.println("Exit");
@@ -73,24 +62,12 @@ public class ReaderDaoImpl implements ReaderDao {
 		for (Book bookToRead : listAllBooks) {
 			System.out.println(bookToRead);
 		}
-
 	}
 
-	private void getBookInformation() {
-		// TODO Auto-generated method stu
-
-	}
 
 	@Override
-	public void showOverdueBooks(Book book) {
+	public void showOverdueBooks() {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Book read(Book book) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

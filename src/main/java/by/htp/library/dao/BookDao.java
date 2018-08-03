@@ -13,11 +13,17 @@ public interface BookDao {
 	
 	Book readBook(int idBook);
 
-	void addNewBook(Book book);
+	Book addNewBook();
 	
 	void addBooktoReader(Book book);
 
-	void deleteBookById(int idBook);
+//	void deleteBookById(int idBook);
 
 	void updateBookOwner(Book book,  Reader reader);
+	
+	void updateBook(Book book);
+	
+	void deleteBook(Book book);
+	
+	void getBookInformation();
 }

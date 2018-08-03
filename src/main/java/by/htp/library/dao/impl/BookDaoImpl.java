@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import by.htp.library.dao.BookDao;
 import by.htp.library.entity.Book;
@@ -23,6 +24,8 @@ public class BookDaoImpl implements BookDao {
 	private static final String INSERT_BOOK = "INSERT INTO book(title, author) VALUES (?, ?)";
 	private static final String DELETE_BOOK = "DELETE FROM book WHERE title = ? AND author = ?";
 	private static final String UPDATE_BOOK = "UPDATE book SET title = ?, author = ? WHERE id_book = ?";
+	
+	Scanner scanner = new Scanner(System.in);
 
 	@Override
 	public Book getBookById(int id) {
@@ -41,7 +44,7 @@ public class BookDaoImpl implements BookDao {
 		}
 		return book;
 	}
-	
+
 	@Override
 	public Book readBook(int id) {
 
@@ -77,10 +80,10 @@ public class BookDaoImpl implements BookDao {
 			while (result.next()) {
 				int idBook = result.getInt("id_book");
 				String title = result.getString("title");
-				
-				String Autor=result.getString("autor");
-				int idAutor= result.getInt("id_autor");
-				
+
+				String Autor = result.getString("autor");
+				int idAutor = result.getInt("id_autor");
+
 				Book b = new Book();
 				b.setIdAutor(idAutor);
 				b.setAutor(Autor);
@@ -96,7 +99,9 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public void addNewBook(Book book) {
+	public Book addNewBook() {
+		Book book = new Book();
+		
 		String title = book.setTitle("Maygli");
 		String Autor = book.setAutor("R. Kipling");
 		int idAutor = book.getIdAutor();
@@ -112,28 +117,29 @@ public class BookDaoImpl implements BookDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return book;
 	}
 
-	@Override  
-    public void deleteBookById(int id) { //что-то не то
-		    Book book = new Book();
-	        id=book.getIdBook();
-
-		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
-			PreparedStatement ps = conn.prepareStatement(DELETE_BOOK);
-			ps.setInt(1, id);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	@Override
+//	public void deleteBookById(int id) { // что-то не то
+//		Book book = new Book();
+//		id = book.getIdBook();
+//
+//		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+//			PreparedStatement ps = conn.prepareStatement(DELETE_BOOK);
+//			ps.setInt(1, id);
+//			ps.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
-	public void updateBookOwner(Book book, Reader reader){
+	public void updateBookOwner(Book book, Reader reader) {
 		int idBook = book.getIdBook();
 		String title = book.getTitle();
 		int idAutor = book.getIdAutor();
-		int idReader = reader.setIdReader(222);//Here might be Math.random
+		int idReader = reader.setIdReader(222);// Here might be Math.random
 
 		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE_BOOK);
@@ -150,8 +156,44 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public void addBooktoReader(Book book) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	@Override
+	public void deleteBook(Book book) {
+		String title = book.getTitle();
+		int idAutor = book.getIdAutor();
+
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(DELETE_BOOK);
+			ps.setString(1, title);
+			ps.setInt(2, idAutor);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateBook(Book book) {
+		System.out.println("Enter idBook");
+		int idBook = book.setIdBook(scanner.nextInt());//FIND BY idBook
+		String title = book.setTitle(scanner.next());
+		int idAutor = book.setIdAutor(scanner.nextInt());
+
+
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			PreparedStatement ps = conn.prepareStatement(UPDATE_BOOK);
+			ps.setString(1, title);
+			ps.setInt(2, idAutor);
+			ps.setInt(3, idBook);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@Override
+	public void getBookInformation() {
+	}
 }

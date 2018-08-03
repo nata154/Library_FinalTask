@@ -2,12 +2,14 @@ package by.htp.library;
 
 import java.util.Scanner;
 
+import by.htp.library.dao.impl.LibrarianDaoImpl;
 import by.htp.library.dao.impl.ReaderDaoImpl;
-import by.htp.library.entity.Reader;
 
 public class LibraryManager {
 
 	Scanner scanner = new Scanner(System.in);
+	ReaderDaoImpl rdi = new ReaderDaoImpl();
+	LibrarianDaoImpl ldi = new LibrarianDaoImpl();
 
 	public void showMainMenu() {
 		System.out.println("Choose menu-item.");
@@ -19,14 +21,14 @@ public class LibraryManager {
 
 		switch (menuItem) {
 		case 1:
-			ReaderDaoImpl.autorizeReader();
-			ReaderDaoImpl.showOverdueBooks();
-			ReaderDaoImpl.showMainReaderMenu();
+			rdi.autorizeReader();
+			rdi.showOverdueBooks();
+			rdi.showMainReaderMenu();
 			break;
 		case 2:
-			autorizeLibrarian();
-			showMainLibrarianMenu();
-			showOverdueBookReaders();
+			ldi.autorizeLibrarian();
+			ldi.showMainLibrarianMenu();
+			ldi.showOverdueBookReaders();
 			break;
 		case 3:
 			System.out.println("Exit");
@@ -35,7 +37,6 @@ public class LibraryManager {
 			System.out.println("Wrong number.");
 			System.out.println("Enter number again.");
 			showMainMenu();
-
 		}
 	}
 

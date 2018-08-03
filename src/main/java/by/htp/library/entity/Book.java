@@ -15,6 +15,14 @@ public class Book {
 		this.title = title;
 		this.autor = autor;
 	}
+	
+	public Book(String title, int idBook, String autor, int idAutor) {
+		super();
+		this.title = title;
+		this.idBook =idBook;
+		this.autor = autor;
+		this.idAutor = idAutor;
+	}
 
 	public String getTitle() {
 		return title;
@@ -36,16 +44,16 @@ public class Book {
 		return idAutor;
 	}
 
-	public void setIdAutor(int idAutor) {
-		this.idAutor = idAutor;
+	public int setIdAutor(int idAutor) {
+		return this.idAutor = idAutor;
 	}
 
 	public int getIdBook() {
 		return idBook;
 	}
 
-	public void setIdBook(int idBook) {
-		this.idBook = idBook;
+	public int setIdBook(int idBook) {
+		return this.idBook = idBook;
 	}
 
 	@Override
