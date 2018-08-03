@@ -7,7 +7,18 @@ public interface LibrarianDao {
 	void showMainLibrarianMenu();
 
 	void showOverdueBookReaders();
+	
+	void addNewReader();
+	
+	void addNewBook();
+	
+	void checkBelongBook();
 
-	void setReturnedBook();
+	void addReturnedBook();
+	
+	void showBooksRating();
+	
+	void show2_8bookReaders();
+	
 	
 }

@@ -1,5 +1,14 @@
 package by.htp.library.dao.impl;
 
+import static by.htp.library.dao.util.MySqlPropertyManager.getLogin;
+import static by.htp.library.dao.util.MySqlPropertyManager.getPass;
+import static by.htp.library.dao.util.MySqlPropertyManager.getUrl;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,6 +16,7 @@ import java.util.Scanner;
 import by.htp.library.dao.impl.BookDaoImpl;
 import by.htp.library.dao.ReaderDao;
 import by.htp.library.entity.Book;
+import by.htp.library.entity.Reader;
 
 public class ReaderDaoImpl implements ReaderDao {
 
@@ -30,8 +40,8 @@ public class ReaderDaoImpl implements ReaderDao {
 
 	@Override
 	public void showMainReaderMenu() {
-		
-		BookDaoImpl BDI = new BookDaoImpl();
+
+		BookDaoImpl bdi = new BookDaoImpl();
 
 		System.out.println("Choose menu-item.");
 		System.out.println("1 Get book list");
@@ -42,10 +52,11 @@ public class ReaderDaoImpl implements ReaderDao {
 
 		switch (menuItem) {
 		case 1:
-			getBookList();
+			bdi.list();
+			;
 			break;
 		case 2:
-			BDI.getBookInformation();
+			bdi.getBookInformation();
 			break;
 		case 3:
 			System.out.println("Exit");
@@ -57,17 +68,32 @@ public class ReaderDaoImpl implements ReaderDao {
 		}
 	}
 
-	public void getBookList() {
-		List<Book> listAllBooks = new ArrayList<>();
-		for (Book bookToRead : listAllBooks) {
-			System.out.println(bookToRead);
-		}
-	}
-
-
 	@Override
 	public void showOverdueBooks() {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public List<Reader> list() {
+
+		List<Reader> listAllReaders = new ArrayList<>();
+
+		try (Connection conn = DriverManager.getConnection(getUrl(), getLogin(), getPass())) {
+			Statement statement = conn.createStatement();
+			ResultSet result = statement.executeQuery(SELECT_ALL_BOOK);
+			while (result.next()) {
+				int idReader = result.getInt("id_reader");
+				String surname = result.getString("surname");
+
+				Reader r = new Reader();
+				r.setIdReader(idReader);
+				r.setSurname(surname);
+
+				listAllReaders.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listAllReaders;
+	}
 }

@@ -1,15 +1,19 @@
 package by.htp.library;
 
+import java.util.List;
 import java.util.Scanner;
 
+import by.htp.library.dao.impl.BookDaoImpl;
 import by.htp.library.dao.impl.LibrarianDaoImpl;
 import by.htp.library.dao.impl.ReaderDaoImpl;
+import by.htp.library.entity.Book;
 
 public class LibraryManager {
 
 	Scanner scanner = new Scanner(System.in);
 	ReaderDaoImpl rdi = new ReaderDaoImpl();
 	LibrarianDaoImpl ldi = new LibrarianDaoImpl();
+	BookDaoImpl bdi = new BookDaoImpl();
 
 	public void showMainMenu() {
 		System.out.println("Choose menu-item.");
@@ -27,8 +31,8 @@ public class LibraryManager {
 			break;
 		case 2:
 			ldi.autorizeLibrarian();
-			ldi.showMainLibrarianMenu();
 			ldi.showOverdueBookReaders();
+			ldi.showMainLibrarianMenu();
 			break;
 		case 3:
 			System.out.println("Exit");

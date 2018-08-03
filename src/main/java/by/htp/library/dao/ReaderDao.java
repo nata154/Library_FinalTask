@@ -1,18 +1,19 @@
 package by.htp.library.dao;
 
+import java.util.List;
+
+import by.htp.library.entity.Reader;
+
 public interface ReaderDao {
 
 	void autorizeReader();
-	//showReaderLoginMenu();
+	
+	List<Reader> list();
 	
 	void showMainReaderMenu();//есть
-
 	
 	void showOverdueBooks();
-	
-	//void getBookList();
-	
-	//void getBookInformation();
+
 	
 	
 }
